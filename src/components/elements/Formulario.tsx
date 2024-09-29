@@ -39,8 +39,6 @@ interface Form {
 
 }
 
-
-
 interface Fiel {
   column: string,
   label: string,
@@ -64,7 +62,6 @@ export default function Booking() {
     t("tooltip.text_4") !== "tooltip.text_4" ? t("tooltip.text_4") : "",
   ];
 
-  const [loading, setLoading] = useState<boolean>(true);
   const [errorForm, setErrorForm] = useState<boolean>(false);
 
   const [forms, setForms] = useState<Form[]>([]);
@@ -191,7 +188,7 @@ export default function Booking() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+     
       try {
         const [formList, prices] = await Promise.all([
           fetch(BOOKING_API),
@@ -220,10 +217,9 @@ export default function Booking() {
         setFormFields(fields);
       } catch (error) {
         setErrorForm(true);
-        setLoading(false);
         console.log(error);
       }
-      setLoading(false);
+    
     };
     fetchData();
     //eslint-disable-next-line react-hooks/exhaustive-deps
