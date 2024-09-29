@@ -1,3 +1,5 @@
+
+
 @keyframes slideIn {
   0% {
     opacity: 0;
@@ -12,7 +14,7 @@
   --bgColor: #2e2d2d;
   --textColor: #303030;
   --textColor: #444141;
-  --mainColor: #ff7d34;
+  --mainColor: #FF5F05;
   --f18: 18px;
   --f20: 20px;
   --f22: 22px;

@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "next-i18next";
 import Button from "@/components/ui/Button";
-import './style.css'
+
 import {
   BOOKING_API,
   BOOKING_API_PRICES,
@@ -17,7 +17,7 @@ import ImageComponent from "../ui/ImageComponent";
 import Input from "../ui/input";
 import { Modal } from "react-bootstrap";
 import { Calendar } from "@nextui-org/calendar";
-
+import './style.css'
 interface Field {
   price: number;
   type: string;
@@ -279,8 +279,7 @@ useEffect(() => {
     }
     newFields[fieldIndex].value = parseInt(e.target.value);
     setFormFields(newFields);
-    // calcular el total
-    // sumar los precios multiplicados por el valor del campo
+  
     let total = 0;
     for (const field of formFields) {
       const value = field.value;
@@ -292,7 +291,7 @@ useEffect(() => {
   };
 
 
-  return errorForm ? null : (
+  return (
     <div className="hero__form" data-aos="fade-up" >
       <h3 className="title-bold">{t("form.text_1")}</h3>
       <p className="badge-info form.text_2">
@@ -319,7 +318,6 @@ useEffect(() => {
         <form
           onSubmit={onSubmit}
         >
-          {forms.length === 1 ?
             <div className=" form__content">
               {formFields.map((field, index) => (
                 <Input
@@ -347,13 +345,7 @@ useEffect(() => {
                 onChange={onChangeDate}
                 onClick={() => onOpenModal()}
               />
-
-
-            </div> :
-            <div>
-              <h1>Prueba de formulario</h1>
-            </div>
-          }
+            </div>   
         </form>
       )}
       <div className=" form__content">

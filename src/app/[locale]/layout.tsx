@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../globals.css'
 import type { Metadata } from "next";
 import React from 'react';
 import initTranslations from "@/lib/i18n"
@@ -7,7 +8,6 @@ import i18nConfig from "@/config/i18n.config";
 import { APP_ICON, SEO_CONFIG } from "@/config/common.config";
 import TranslationsProvider from "@/components/TranslationsProvider";
 import Script from "next/script";
-import '../globals.css'
 export const metadata: Metadata = {
   title: SEO_CONFIG.title,
   description: SEO_CONFIG.description,

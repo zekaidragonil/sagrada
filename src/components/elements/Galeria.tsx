@@ -1,7 +1,8 @@
 import React from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import {LazyLoadImage } from 'react-lazy-load-image-component';
 import { PUBLIC_ASSETS } from '@/config/common.config';
 import { useTranslation } from 'react-i18next';
+import Image from 'next/image';
 
 const Galeria = () => {
   const { t } = useTranslation('translation');
@@ -14,11 +15,12 @@ const Galeria = () => {
         {PUBLIC_ASSETS.gallery.map((item) => (
           <div className="col-lg-4 col-md-6" key={item}>
             <div className="gallery__blk wrap alto" data-aos="zoom-in">
-              <LazyLoadImage
+              <Image
                 src={item}
                 alt=""
                 width={460}
                 height={560}
+                priority 
                 style={{ objectFit: 'cover', height: '100%', width: '100%' }}
               />
             </div>
@@ -27,7 +29,8 @@ const Galeria = () => {
 
         <div className="col-lg-12" data-aos="fade-up" >
           <div className="gallery__btn pb-3">
-            <a href="#" className="thm_btn">{galery_button} <LazyLoadImage className="lazy" src={'/images/icons/arrow-right.png'} alt="" /></a>
+            <a href="#" className="thm_btn">{galery_button} <LazyLoadImage className="lazy" src={'/images/icons/arrow-right.png'} alt="" 
+            /></a>
           </div>
         </div>
       </div>

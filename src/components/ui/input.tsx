@@ -93,11 +93,11 @@ const Input: React.FC<InputProps> = ({ label, date, name, typeForm, price, place
   };
   return (
     <div className="hero__form__blk">
-      <div className="d-flex gap-2 mb-2">{`${label} `}
+      <label className="d-flex gap-2 mb-2">{`${label} `}
         {tooltip && <Tooltip text={tooltip}>
           <ImageComponent src='/images/icons/info_icon.svg' alt="icon" width={19} height={19} />
         </Tooltip>}
-      </div>
+      </label>
       {type !== "date" ? (
         <div className="Ticket_quantity" data-input="qty__a">
           <button onClick={decrement} type="button" className="counter__decrement">-</button>
