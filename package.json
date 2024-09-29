@@ -1,0 +1,46 @@
+{
+  "name": "template",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@internationalized/date": "^3.0.0-nightly.2967",
+    "@next/bundle-analyzer": "^14.2.13",
+    "@nextui-org/calendar": "^2.0.12",
+    "@nextui-org/modal": "^2.0.41",
+    "@stripe/stripe-js": "^4.5.0",
+    "aos": "^2.3.4",
+    "bootstrap": "^5.3.3",
+    "dayjs": "^1.11.13",
+    "i18next": "^23.15.1",
+    "i18next-resources-to-backend": "^1.2.1",
+    "next": "14.2.13",
+    "next-i18n-router": "^5.5.1",
+    "react": "^18",
+    "react-bootstrap": "^2.10.5",
+    "react-dom": "^18",
+    "react-i18next": "^15.0.2",
+    "react-lazy-load-image-component": "^1.6.2",
+    "terser-webpack-plugin": "^5.3.10"
+  },
+  "devDependencies": {
+    "@builder.io/partytown": "^0.10.2",
+    "@types/aos": "^3.0.7",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-lazy-load-image-component": "^1.6.4",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.13",
+    "next-i18next": "^15.3.1",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5"
+  }
+}
