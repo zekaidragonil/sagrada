@@ -31,10 +31,13 @@ export default function About() {
                             {text1 !== "content.main.text_1" && <p className="content_main_text_1" dangerouslySetInnerHTML={{ __html: text1 }} />}
                             {text2 !== "content.main.text_2" && <p className="content_main_text_2" dangerouslySetInnerHTML={{ __html: text2 }} />}
                             {text3 !== "content.main.text_3" && <p className="content_main_text_3" dangerouslySetInnerHTML={{ __html: text3 }} />}
+                            <div className='margintop'>
                             <Button
-                                className='thm_btn'
+                                className='thm_btn '
                                 text={button1}
                             />
+
+                            </div>
                         </div>
                     </div>
                     <div className="col-lg-6 order-1 order-md-0">

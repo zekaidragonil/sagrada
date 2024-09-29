@@ -1,0 +1,22 @@
+# Archivo robots.txt para un proyecto Next.js
+
+# Bloquear el acceso a las páginas de administración o privadas
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+Disallow: /user/
+
+# Permitir el acceso a los archivos estáticos (CSS, JS, imágenes, etc.)
+Allow: /_next/static/
+Allow: /images/
+Allow: /favicon.ico
+
+# Evitar que los motores de búsqueda indexen URLs con parámetros de búsqueda o filtrado
+Disallow: /*?filter=
+Disallow: /*?search=
+
+# Permitir la página principal
+Allow: /
+
+# Indicar la ubicación del sitemap
+Sitemap: https://www.tusitio.com/sitemap.xml

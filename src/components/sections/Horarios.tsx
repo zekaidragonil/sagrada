@@ -2,9 +2,9 @@
 import { useTranslation } from "react-i18next";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { PUBLIC_ASSETS } from "@/config/common.config";
-import Galeria from "../elements/Galeria";
+import dynamic from "next/dynamic";
 
-
+const Galeria = dynamic(() => import('../elements/Galeria'));
 
 export default function Horarios() {
     const { t } = useTranslation('translation');
@@ -81,7 +81,7 @@ export default function Horarios() {
                             <div className="col-lg-12">
                                 <div>
                                     {galery_title !== "schedule.title_1" && <h2 data-aos="fade-up" className=" gallery_title_1" dangerouslySetInnerHTML={{ __html: galery_title }} />}
-                                    {galery_title2 !== "schedule.title_2" && <h2 data-aos="fade-up" className=" gallery_title_2" dangerouslySetInnerHTML={{ __html: galery_title2 }} />}
+                                    {galery_title2 !== "schedule.title_2" && <span data-aos="fade-up" className=" gallery_title_2" dangerouslySetInnerHTML={{ __html: galery_title2 }} />}
                                     {galery_text !== "schedule.title_3" && <p data-aos="fade-up" dangerouslySetInnerHTML={{ __html: galery_text }} className="gallery_text" />}
                                     {galery_text2 !== "schedule.title_4" && <p data-aos="fade-up" dangerouslySetInnerHTML={{ __html: galery_text2 }} className="gallery_text" />}
                                     {galery_text3 !== "schedule.title_5" && <p data-aos="fade-up" dangerouslySetInnerHTML={{ __html: galery_text3 }} className="gallery_text" />}

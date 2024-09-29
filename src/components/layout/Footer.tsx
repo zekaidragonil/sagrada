@@ -69,9 +69,9 @@ export default function Footer() {
                     </div>
                     <div className="col-lg-12">
                         <div className="footer__btn">
-                            {copyright !== "footer.copyright" && <li> <b className="footer_copyright_li" dangerouslySetInnerHTML={{ __html: `${copyright} © TicketGo ` }} /></li>}
-
+                    
                             <ul>
+                            {copyright !== "footer.copyright" && <li> <b className="footer_copyright_li" dangerouslySetInnerHTML={{ __html: `${copyright} © TicketGo ` }} /></li>}
                                 {legal !== "footer.legal_1" && <li><b><Link href="/conditions" className="footer_link" dangerouslySetInnerHTML={{ __html: legal }} /></b></li>}
                                 {legal2 !== "footer.legal_2" && <li><b><span>|</span></b></li>}
                                 {legal3 !== "footer.legal_3" && <li><b><Link href="/cookies" className="footer_link" dangerouslySetInnerHTML={{ __html: legal2 }} /></b></li>}

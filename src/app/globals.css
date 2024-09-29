@@ -160,6 +160,9 @@ li {
 .thm_btn:hover img {
   transform: translateX(10px);
 }
+.margintop{
+  margin-top: 40px;
+}
 
 .header-area {
   padding: 30px 0;
@@ -452,10 +455,13 @@ li {
 .hero__title h3 {
   color: #fff;
   font-weight: 400;
+  font-size: 28px;
 }
 .hero__title h1 {
   color: #fff;
-  max-width: 500px;
+  font-size: 40px;
+  max-width: 420px;
+  font-weight: 700;
 }
 .hero__form {
   max-width: 640px;
@@ -465,9 +471,10 @@ li {
   z-index: 1;
 }
 .future__img i,
-.hero__form > h3,
-.hero__title h1 {
+.hero__form h3{
   margin-bottom: 20px;
+   font-size: 28px;
+   font-weight: 700;
 }
 .future__blk h2,
 .hero__form p {
@@ -479,6 +486,7 @@ li {
   background: var(--mainColor);
   border-radius: 3.75px;
   gap: 10px;
+  margin-bottom: 16px;
 }
 .hero__form:before {
   border-radius: 20px;
@@ -499,6 +507,7 @@ li {
 .hero__form__blk h1 {
   font-family: "Roboto";
   margin: 0;
+   font-size: 40px;
 }
 .Ticket_quantity,
 .hero__form__blk > input {
@@ -571,6 +580,8 @@ li {
 .sec__title h1 {
   color: var(--textColor);
   margin-bottom: 20px;
+  font-size: 40px;
+  font-weight: 700;
 }
 .future__text a {
   width: max-content;
@@ -578,12 +589,15 @@ li {
 }
 .future__text p {
   max-width: 560px;
+   margin-bottom: 1rem;
+
 }
 .future__text h1 {
   color: #444141;
   margin-bottom: 30px;
   letter-spacing: -0.8px;
   font-weight: 400;
+   font-size: 40px;
 }
 .future__text h1 span {
   color: var(--textColor);
@@ -604,6 +618,7 @@ li {
   margin: 0;
   gap: 20px;
   font-weight: 400;
+  font-size: 35px;
 }
 .hero__form__blk.sb_btn a {
   height: 46px;
@@ -645,6 +660,7 @@ li {
 .asombro-area h1 {
   font-style: italic;
   font-weight: 400;
+  font-size: 40px;
 }
 .gallery-area {
   margin-top: -301px;
@@ -1222,9 +1238,11 @@ iframe {
     font-size: 24px;
     max-width: 80%;
     margin-inline: auto;
+
   }
   .asombro-area span {
     font-size: 40px;
+    font-weight: 700;
   }
   .Explora__content h1 {
     font-size: 30px;
@@ -1330,7 +1348,7 @@ iframe {
     padding-top: 150px;
   }
   .asombro-area p {
-    font-size: 15px;
+    font-size: 20px;
   }
   .Explora-area .container {
     max-width: 500px;
@@ -1597,7 +1615,7 @@ iframe {
     padding-bottom: 0;
   }
   .asombro-area p {
-    font-size: 15px;
+    font-size: 20px;
   }
   .Explora-area {
     background-size: cover;
@@ -1680,7 +1698,7 @@ iframe {
     font-size: 30px;
     font-weight: 400;
   }
-  .hero__form > h3 {
+  .hero__form  h3 {
     text-align: center;
     font-size: 22px;
   }
@@ -1989,4 +2007,14 @@ iframe {
   height: 495px!important;
 }
 
+.form-placeholder {
+  min-height: 420px; 
+}
 
+.future__blk p{
+ margin-bottom: 1rem;
+}
+
+.asombro-area h2{
+  font-size: 40px;
+}

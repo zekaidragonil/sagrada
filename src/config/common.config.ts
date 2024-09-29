@@ -31,12 +31,12 @@ export const PUBLIC_ASSETS = {
     rulesBanner: "/images/resource/about-2.webp",
     normativa: "/images/11.webp",
     gallery: [
-      "/images/gallery/gallery-1.jpeg",
-      "/images/gallery/gallery-2.jpeg",
-      "/images/gallery/gallery-3.jpeg",
-      "/images/gallery/gallery-4.jpeg",
-      "/images/gallery/gallery-5.jpeg",
-      "/images/gallery/gallery-6.jpeg",
+      "/images/gallery/gallery-1.webp",
+      "/images/gallery/gallery-2.webp",
+      "/images/gallery/gallery-3.webp",
+      "/images/gallery/gallery-4.webp",
+      "/images/gallery/gallery-5.webp",
+      "/images/gallery/gallery-6.webp",
     ],
     transportIcons: [
       '/images/resource/map-img-1.svg',

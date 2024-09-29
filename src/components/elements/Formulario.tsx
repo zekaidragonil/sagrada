@@ -296,7 +296,7 @@ useEffect(() => {
   };
 
 
-  return loading || errorForm ? null : (
+  return errorForm ? null : (
     <div className="hero__form" data-aos="fade-up" >
       <h3 className="title-bold">{t("form.text_1")}</h3>
       <p className="badge-info form.text_2">

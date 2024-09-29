@@ -1,7 +1,10 @@
 'use client'
 import { useTranslation } from "react-i18next";
-import Formulario from "../elements/Formulario";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
+
+const Formulario = dynamic(() => import('../elements/Formulario'));
 
 export default function Banner() {
     const { t } = useTranslation('translation');
@@ -17,7 +20,11 @@ export default function Banner() {
                                 <span dangerouslySetInnerHTML={{ __html: t("form.title_3") }} className='form_title_3' />
                             </h1>
                         </div>
-                        <Formulario />
+                        <div className="form-placeholder">
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Formulario />
+                            </Suspense>
+                        </div>
                     </div>
                 </div>
             </div>
