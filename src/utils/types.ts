@@ -20,6 +20,7 @@ export type TranslationResources = {
     footer?: boolean;
     calendar?: boolean;
     active?: boolean;
+    link?: boolean;
     className?: string;
 }
 

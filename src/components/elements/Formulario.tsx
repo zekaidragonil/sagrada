@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "next-i18next";
 import Button from "@/components/ui/Button";
-
 import {
   BOOKING_API,
   BOOKING_API_PRICES,
@@ -11,13 +10,13 @@ import {
   APP_NAME,
   API_URL,
 } from "@/config/common.config";
-import { getLocalTimeZone, parseDate, today } from "@internationalized/date";
 import dayjs from 'dayjs';
 import ImageComponent from "../ui/ImageComponent";
 import Input from "../ui/input";
 import { Modal } from "react-bootstrap";
-import { Calendar } from "@nextui-org/calendar";
-import './style.css'
+import DataPicker from "./Calendario";
+
+
 interface Field {
   price: number;
   type: string;
@@ -25,11 +24,6 @@ interface Field {
   value: number;
   column: string;
   label: string;
-}
-interface DateChangeEvent {
-  day: number;
-  month: number;
-  year: number;
 }
 
 interface Form {
@@ -43,6 +37,7 @@ interface Fiel {
   column: string,
   label: string,
 }
+
 
 export default function Booking() {
 
@@ -65,30 +60,29 @@ export default function Booking() {
   const [errorForm, setErrorForm] = useState<boolean>(false);
 
   const [forms, setForms] = useState<Form[]>([]);
-  const [formType, setFormType] = useState<string[]>([]);
+  const [formType, setFormType] = useState<string>('');
   const [formFields, setFormFields] = useState<Field[]>([]);
 
   const [displayOpacity, setDisplayOpacity] = useState<number>(0);
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [formattedDate, setformattedDate] = useState<string | null>(null);
   const [show, setShow] = useState<boolean | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [Valido, setValido] = useState<boolean>(false);
 
   const [schedulesNoon, setSchedulesNoon] = useState<string[]>([]);
   const [schedulesAfternoon, setSchedulesAfternoon] = useState<string[]>([]);
   const [selectedSchedule, setSelectedSchedule] = useState<string | null>(null);
-
-  const [disabledDates, setDisabledDates] = useState<string[][]>([]);
+  const [disabledDates, setDisabledDates] = useState<Date[]>([]);
   const maxDisabledDate = dayjs().add(DAYS_PERIOD_DISABLED, "day");
   const opactityInterval = useRef<NodeJS.Timeout | null>(null);
+    
 
-  const onChangeDate = async (e: React.ChangeEvent<HTMLInputElement> | DateChangeEvent) => {
-    const dateEvent = e as DateChangeEvent;
-    const { day, month, year } = dateEvent;
-    const date = new Date(year, month - 1, day);
-    const formattedDate = dayjs(date).format("YYYY-MM-DD");
-    setSelectedDate(formattedDate)
+
+  const onChangeDate = async () => {
+
     try {
       const schedules = await fetch(
         `https://dev.ticketgotourism.com/api/attraction/schedule?attraction=${ATTRACTION_ID}&date=${formattedDate}&form=${formType}`
@@ -96,15 +90,15 @@ export default function Booking() {
       const data = await schedules.json();
       const morningSchedules: string[] = [];
       const afternoonSchedules: string[] = [];
-
-      data.forEach((schedule:string) => {
+   
+      data.forEach((schedule: string) => {
         const [hours, minutes] = schedule.split(":").map(Number);
         const scheduleDate = new Date();
         scheduleDate.setHours(hours, minutes, 0, 0);
 
         const noon = new Date();
         noon.setHours(12, 0, 0, 0);
-
+      
         if (scheduleDate < noon) {
           morningSchedules.push(schedule);
         } else {
@@ -123,44 +117,70 @@ export default function Booking() {
       const days_disabled = await fetch(
         `${API_URL}/attraction/calendar/disabled?attraction=${ATTRACTION_ID}&days=${DAYS_PERIOD_DISABLED}&form=${formType}`
       );
-      const disable = await days_disabled.json();
-        console.log(disable)
-      if (disable) {
-        setDisabledDates(disable);
-      }
+      const disable: string[] = await days_disabled.json();
+
+      const formattedDates = disable.map(dateStr => dayjs(dateStr).toDate());
+       setDisabledDates(formattedDates);
     } catch (error) {
       console.log(error);
     }
   };
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+   
+    setFormType(e.target.type);
+
+    const target = e.target as HTMLInputElement & { typeForm?: string };
+    const fieldIndex = formFields.findIndex(
+      (field) =>
+        field.name === target.typeForm && field.column === target.name
+    );
+
+    if (fieldIndex === -1) return;
+    const newFields = [...formFields];
+   
+    for (const field of newFields) {
+      if (field.name !== target.typeForm) {
+        field.value = 0;
+      }
+    }
+    newFields[fieldIndex].value = parseInt(e.target.value);
+    setFormFields(newFields);
+    // calcular el total
+    // sumar los precios multiplicados por el valor del campo
+    let total = 0;
+    for (const field of formFields) {
+      const value = field.value;
+      const price = field.price;
+      const totalValue = value * price;
+      total += totalValue;
+    }
+
+    setTotalPrice(total);
+  };
+
 
   const handleSelectSchedule = (schedule: string) => {
     setSelectedSchedule(schedule);
   };
 
-  const isDateUnavailable = () => {
-    const date = new Date();
-    const dateString = date.toString();
-    for (const element of disabledDates) {
-      if (dateString === element.join("-")) {
-        return true;
-      }
-    }
 
-    return false;
-  };
 
   const onOpenModal = () => {
-    if (totalPrice > 0) {
-      fetchDaysDisabled()
-      return openModal();
-    }
+    let isValid = false 
+    formFields.map((item)=> {
+       if(item.column === 'qty_a' && item.value > 0 ||item.column === 'qty_b' && item.value > 0  && totalPrice > 0 ){
+        fetchDaysDisabled()
+        isValid = true;
+        return openModal();
+       }
+    })
+    setValido(!isValid)
     showAlert();
   };
 
   const showAlert = () => {
     setShow(true);
   };
-
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
@@ -184,11 +204,17 @@ export default function Booking() {
     window.location.href = '/purchase';
   };
 
- 
+  const haldenDate = (date:Date) =>{
+    onChangeDate();
+    const formattedDate = dayjs(date).format('YYYY-MM-DD');
+    setformattedDate(formattedDate)
+    const fecha = dayjs(date).format('DD/MM/YYYY');
+    setSelectedDate(fecha);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
-     
+
       try {
         const [formList, prices] = await Promise.all([
           fetch(BOOKING_API),
@@ -202,7 +228,7 @@ export default function Booking() {
           if (!forms.includes(data[0].name)) {
             forms.push(data[0].name);
           }
-          data[0].fields.map((field:Fiel,) => {
+          data[0].fields.map((field: Fiel,) => {
             const price = field.column.replace(/_/g, "");
             fields.push({
               price: pricesData[price],
@@ -212,86 +238,58 @@ export default function Booking() {
               ...field,
             });
           });
-        } 
+        }
         setForms(forms);
         setFormFields(fields);
       } catch (error) {
         setErrorForm(true);
+
         console.log(error);
       }
-    
+
     };
     fetchData();
-    //eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, []);
 
-useEffect(() => {
-  if (show === null) {
-    if (opactityInterval.current !== null) clearInterval(opactityInterval.current);
-    return;
-  }
-  if (!show) {
-    let transition = 1;
-    opactityInterval.current = setInterval(() => {
-      transition -= 0.1;
-      setDisplayOpacity(transition);
-      if (transition <= 0) {
-        if (opactityInterval.current !== null) clearInterval(opactityInterval.current);
-        setDisplayOpacity(0);
-      }
-    }, 50);
-  } else {
-    let transition = 0;
-    opactityInterval.current = setInterval(() => {
-      transition += 0.1;
-      setDisplayOpacity(transition);
-      if (transition >= 1) {
-        if (opactityInterval.current !== null) clearInterval(opactityInterval.current);
-        setDisplayOpacity(1);
-      }
-    }, 50);
-  }
-
-  // Cleanup on component unmount or if 'show' changes
-  return () => {
-    if (opactityInterval.current !== null) clearInterval(opactityInterval.current);
-  };
-}, [show]);
-
-  const onChangeInput = (e:React.ChangeEvent<HTMLInputElement>) => {
-    setShow(false);
-    setFormType([e.target.type]);
-    // buscar en formFields el campo que se ha cambiado
-
-    const target = e.target as HTMLInputElement & { typeForm?: string };
-    const fieldIndex = formFields.findIndex(
-      (field) =>
-          field.name === target.typeForm && field.column === target.name
-  );
-
-    if (fieldIndex === -1) return;
-    const newFields = [...formFields];
-    // actualiza todos los inputs a valor 0 donde el typeForm no coincide con el nombre del campo
-    for (const field of newFields) {
-      if (field.name !== target.typeForm) {
-        field.value = 0;
-      }
+  useEffect(() => {
+    if (show === null) {
+      if (opactityInterval.current !== null) clearInterval(opactityInterval.current);
+      return;
     }
-    newFields[fieldIndex].value = parseInt(e.target.value);
-    setFormFields(newFields);
+    if (!show) {
+      let transition = 1;
+      opactityInterval.current = setInterval(() => {
+        transition -= 0.1;
+        setDisplayOpacity(transition);
+        if (transition <= 0) {
+          if (opactityInterval.current !== null) clearInterval(opactityInterval.current);
+          setDisplayOpacity(0);
+        }
+      }, 50);
+    } else {
+      let transition = 0;
+      opactityInterval.current = setInterval(() => {
+        transition += 0.1;
+        setDisplayOpacity(transition);
+        if (transition >= 1) {
+          if (opactityInterval.current !== null) clearInterval(opactityInterval.current);
+          setDisplayOpacity(1);
+        }
+      }, 50);
+    }
+
+    return () => {
+      if (opactityInterval.current !== null) clearInterval(opactityInterval.current);
+    };
+  }, [show]);
+
   
-    let total = 0;
-    for (const field of formFields) {
-      const value = field.value;
-      const price = field.price;
-      const totalValue = value * price;
-      total += totalValue;
-    }
-    setTotalPrice(total);
-  };
 
+  const today = new Date();
+  const minDisabledDate = dayjs(today).subtract(1, 'day');
 
-  return (
+  return errorForm ? null : (
     <div className="hero__form" data-aos="fade-up" >
       <h3 className="title-bold">{t("form.text_1")}</h3>
       <p className="badge-info form.text_2">
@@ -314,10 +312,22 @@ useEffect(() => {
           {text_alert_badge}
         </p>
       )}
+      {Valido &&   (
+        <p id="form-error-message"
+          className={"badge-info badge-alert mt-1"}
+          style={{
+            display: displayOpacity !== 0 ? "block" : "none",
+            opacity: displayOpacity,
+          }}
+        >
+         { t("form.alert_2")}
+        </p>
+      )}
       {!errorForm && (
         <form
           onSubmit={onSubmit}
         >
+          {forms.length === 1 ?
             <div className=" form__content">
               {formFields.map((field, index) => (
                 <Input
@@ -340,12 +350,18 @@ useEffect(() => {
                 placeholder="DD / MM / YYYY"
                 type="date"
                 name="date"
+                typeForm="YSDFFDF"
                 price={0}
-                typeForm="yourTypeFormValue"
                 onChange={onChangeDate}
                 onClick={() => onOpenModal()}
               />
-            </div>   
+
+
+            </div> :
+            <div>
+              <h1>Prueba de formulario</h1>
+            </div>
+          }
         </form>
       )}
       <div className=" form__content">
@@ -385,20 +401,18 @@ useEffect(() => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Calendar
-            aria-label="Date (Controlled)"
-            color="warning"
-            defaultValue={selectedDate ? parseDate(dayjs(selectedDate).format('YYYY-MM-DD')) : null}
-            minValue={today(getLocalTimeZone())}
-            maxValue={parseDate(maxDisabledDate.format('YYYY-MM-DD'))}
-            onChange={onChangeDate}
-            isDateUnavailable={isDateUnavailable}
+          <DataPicker
+            minDate={minDisabledDate.toDate()}
+            maxDate={maxDisabledDate.toDate()} 
+            disabledDates={disabledDates}
+            onDateSelect={haldenDate} 
           />
 
+
           {modal_title_2 !== "modal.schedula_1" &&
-            (schedulesNoon.length > 0 || schedulesAfternoon.length > 0) && (
+           
               <p className="modal_title_2">{modal_title_2}</p>
-            )}
+            }
           {schedulesNoon.length > 0 && (
             <div className="d-flex flex-column justify-content-center align-items-center px-3">
               {modal_schedula_1 !== "modal.schedula_1" && (
@@ -443,24 +457,24 @@ useEffect(() => {
               </div>
             </div>
           )}
-          <div className="flex justify-center">
-         
-          {t("form.text_6") !== "form.text_6" && selectedSchedule !== null && (
-            <Button
-              type="submit"
-              text={t("form.text_6")}
-              banner={true}
-              footer={true}
-              calendar={true}
-              className="thm_btn Ticket_purchase hero__form__blkButton mt-2"
-              disabled={selectedSchedule === null}
-              active={selectedSchedule !== null}
-              onClick={() => onSubmit()}
-            />
-          )}
-           </div>
+          <div className="d-flex justify-content-center">
+
+              <Button
+                type="submit"
+                text={t("form.text_6")}
+                banner={true}
+                footer={true}
+                calendar={true}
+                className="thm_btn Ticket_purchase hero__form__blkButton mt-2"
+                disabled={selectedSchedule === null}
+                active={selectedSchedule !== null}
+                onClick={() => onSubmit()}
+              />
+    
+          </div>
         </Modal.Body>
       </Modal>
     </div>
   );
 }
+

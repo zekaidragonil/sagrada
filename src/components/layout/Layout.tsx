@@ -1,5 +1,5 @@
 'use client'
-import {ReactNode, useEffect } from "react";
+import React,{ReactNode, useEffect } from "react";
 import Aos from "aos";
 import 'aos/dist/aos.css';
 import Header from "@/components/layout/Header";
@@ -10,10 +10,9 @@ interface LayoutProps {
 children: ReactNode; 
 }
     
-
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     useEffect(() => {
-        Aos.init({ duration: 500 });
+        Aos.init({ duration: 100 });
     }, []);
 
     return (

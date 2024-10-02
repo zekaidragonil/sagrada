@@ -61,6 +61,7 @@ const Input: React.FC<InputProps> = ({ label, date, name, typeForm, price, place
           value: newValue.toString(),
           price,
           typeForm,
+          type
         } as CustomInputEventTarget,
         currentTarget: event.currentTarget as CustomInputEventTarget, // Ensure currentTarget is correctly typed
       };
@@ -84,6 +85,7 @@ const Input: React.FC<InputProps> = ({ label, date, name, typeForm, price, place
           value: newValue.toString(),
           price,
           typeForm,
+          type
         } as CustomInputEventTarget,
         currentTarget: event.currentTarget as CustomInputEventTarget, // Ensure currentTarget is correctly typed
       };
@@ -93,11 +95,11 @@ const Input: React.FC<InputProps> = ({ label, date, name, typeForm, price, place
   };
   return (
     <div className="hero__form__blk">
-      <label className="d-flex gap-2 mb-2">{`${label} `}
+      <div className="d-flex gap-2 mb-2">{`${label} `}
         {tooltip && <Tooltip text={tooltip}>
           <ImageComponent src='/images/icons/info_icon.svg' alt="icon" width={19} height={19} />
         </Tooltip>}
-      </label>
+      </div>
       {type !== "date" ? (
         <div className="Ticket_quantity" data-input="qty__a">
           <button onClick={decrement} type="button" className="counter__decrement">-</button>

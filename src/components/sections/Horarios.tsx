@@ -3,8 +3,10 @@ import { useTranslation } from "react-i18next";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { PUBLIC_ASSETS } from "@/config/common.config";
 import dynamic from "next/dynamic";
-
-const Galeria = dynamic(() => import('../elements/Galeria'));
+import React from "react";
+const Galeria = dynamic(() => import('../elements/Galeria'),{
+    ssr: false,
+});
 
 export default function Horarios() {
     const { t } = useTranslation('translation');
@@ -74,7 +76,12 @@ export default function Horarios() {
                     </div>
                 </div>
             </section>
-            <section className="asombro-area overflow-hidden a lazy-bg"   style={{ background: `url(${PUBLIC_ASSETS.bg_extra})` }}>
+            <section className="asombro-area overflow-hidden  lazy-bg"   style={{ background: `url(${PUBLIC_ASSETS.bg_extra})` }}>
+                <LazyLoadImage
+                   src={PUBLIC_ASSETS.imageHorario}
+                   className="b imagen_horarios"
+                   
+                /> 
                 <div className="opacity no-padding">
                     <div className="container">
                         <div className="row">
@@ -92,6 +99,9 @@ export default function Horarios() {
                     </div>
                 </div>
             </section>
+
+               
+
             <section className="gallery-area overflow-hidden">
                 <div className="gallery__btn d-md-none">
                     <a href="#" className="thm_btn">{galery_button} <LazyLoadImage className="lazy" src={'/images/icons/arrow-right.png'} alt="" /></a>

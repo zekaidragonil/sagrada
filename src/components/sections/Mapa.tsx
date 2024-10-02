@@ -1,13 +1,15 @@
 'use client'
 
-import { Accordion } from 'react-bootstrap';
+import { Accordion, } from 'react-bootstrap';
 import { GOOGLE_MAP_EMBED, PUBLIC_ASSETS } from '@/config/common.config';
 import { useTranslation } from 'react-i18next';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import Button from '../ui/Button';
+
 
 export default function Map() {
     const { t } = useTranslation('translation');
-    
+    const galery_button = t("gallery.button_1");
     const title = t("location.title_1");
     const title_walk = t("location.walk.title");
     const text_walk = t("location.walk.text_1");
@@ -97,54 +99,62 @@ export default function Map() {
         },
     ];
 
-    return(
+    return (
         <section id='map' className="formas-area overflow-hidden">
-        <div className="container">
-            <div className="text-center formas__area__top"  data-aos="fade-up" >
-                <div className="sec__title">
-                    {title !== "" && <h1 className="section_heading_title_big content.main.title_1" dangerouslySetInnerHTML={{ __html: title }} />}
+            <div className="container">
+                <div className="text-center formas__area__top" data-aos="fade-up" >
+                    <div className="sec__title">
+                        {title !== "" && <h1 className="section_heading_title_big content.main.title_1" dangerouslySetInnerHTML={{ __html: title }} />}
+                    </div>
+                    <div className="formas__map" data-aos="zoom-in" >
+                        <iframe width="100%" height="570" src={`https://www.google.com/maps/embed?${GOOGLE_MAP_EMBED}`}
+                            title='map'
+                        />
+                    </div>
                 </div>
-                <div className="formas__map" data-aos="zoom-in" >
-                    <iframe width="100%" height="570" src={`https://www.google.com/maps/embed?${GOOGLE_MAP_EMBED}`}
-                        title='map'
-                    />
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-lg-12">
-                    <div className="formas__accordion section-content">
-                        <div  id="accordionExample">
-                            {transportOptions.map((option, index) => (
-                                <Accordion key={option.id} defaultActiveKey="0">
-                                    <Accordion.Item eventKey={option.id}>
-                                        <Accordion.Header>
-                    
-                                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                <i style={{ marginRight: '10px' }}>
-                                                    <LazyLoadImage
-                                                        src={PUBLIC_ASSETS.transportIcons[index]}
-                                                        alt=""
-                                                        width={80}
-                                                        height={80}
-                                                    />
-                                                </i>
-                                                {option.title}
-                                            </div>
-                                        </Accordion.Header>
-                                        <Accordion.Body>
-                                            <ul>
-                                                <li>{option.content}</li>
-                                            </ul>
-                                        </Accordion.Body>
-                                    </Accordion.Item>
-                                </Accordion>
-                            ))}
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="formas__accordion section-content">
+                            <div id="accordionExample">
+                                {transportOptions.map((option, index) => (
+                                    <Accordion key={option.id} defaultActiveKey="0">
+                                        <Accordion.Item eventKey={option.id}>
+                                            <Accordion.Header>
+
+                                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                    <i style={{ marginRight: '10px' }}>
+                                                        <LazyLoadImage
+                                                            src={PUBLIC_ASSETS.transportIcons[index]}
+                                                            alt=""
+                                                            width={80}
+                                                            height={80}
+                                                        />
+                                                    </i>
+                                                    {option.title}
+                                                </div>
+                                            </Accordion.Header>
+                                            <Accordion.Body>
+                                                <ul>
+                                                    <li>{option.content}</li>
+                                                </ul>
+                                            </Accordion.Body>
+                                        </Accordion.Item>
+                                    </Accordion>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="gallery__btn d-flex justify-content-center pb-3 d-md-none  ">
+                            <Button
+                                link={true}
+                                className='thm_btn'
+                                text={galery_button}
+                            />
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
     )
 }

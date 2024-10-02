@@ -1,8 +1,8 @@
 'use client'
 import { useTranslation } from 'next-i18next'
 import Button from "@/components/ui/Button";
-import { PUBLIC_ASSETS } from '@/config/common.config';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { PUBLIC_ASSETS } from '@/config/common.config';
 
 export default function About() {
     const { t } = useTranslation('translation');
@@ -33,6 +33,7 @@ export default function About() {
                             {text3 !== "content.main.text_3" && <p className="content_main_text_3" dangerouslySetInnerHTML={{ __html: text3 }} />}
                             <div className='margintop'>
                             <Button
+                                 link={true}
                                 className='thm_btn '
                                 text={button1}
                             />
@@ -42,16 +43,13 @@ export default function About() {
                     </div>
                     <div className="col-lg-6 order-1 order-md-0">
                         <div className="" data-parallax='{"y": -50}'></div>
-                        <div className="future__img" data-aos="zoom-in" >
+                    
                             <LazyLoadImage
                                 src={PUBLIC_ASSETS.aboutBanner}
                                 alt="about-banner"
-                                width={1200}
-                                height={600}
-                                className='about_img' 
+                                className='responsive-img'
                             />
-                            <div className="future__img__content"></div>
-                        </div>
+                         
                     </div>
                 </div>
             </div>

@@ -10,7 +10,8 @@ export const BOOKING_API = `${API_URL}/attraction/forms/list?attraction=${ATTRAC
 export const BOOKING_API_PRICES = `${API_URL}/attraction/prices?attraction=${ATTRACTION_ID}`;
 
 export const STRIPE_API = `${API_URL}/stripe`;
-export const STRIPE_SUCCESS_URL = "https://react.dev.ticketgotourism.com/payout";
+export const STRIPE_SUCCESS_URL = "http://localhost:3000/payout";
+// export const STRIPE_SUCCESS_URL = "https://react.dev.ticketgotourism.com/payout";
 export const STRIPE_NAME = "Sagrada Familia";
 
 export const STRIPE_PUBLISHABLE_KEY = "pk_test_51OXScsAiwwsMv47vfECpGsIOylEEucheKtYkQfarI1CG3E3UDuvsclL3Ux7EuqgC2E9pQj4gOVDbKseIeLd0J2Yt00FER9XG3c"
@@ -19,6 +20,8 @@ export const THEME_CONFIG = {
     mainColor: "#FF7D34",
     headerColor: "#2e2d2d",
 };
+
+export const ENVIRONMENT = true;
 
 // image urls
 export const PUBLIC_ASSETS = {
@@ -30,6 +33,9 @@ export const PUBLIC_ASSETS = {
     explorerBanner: "/images/resource/about-3.webp",
     rulesBanner: "/images/resource/about-2.webp",
     normativa: "/images/11.webp",
+    normativaMobil: "/images/resource/about-3.webp",
+    imageHorario:"/images/gallery/gallery-1.webp",
+    imageRecomedacion :"/images/gallery/gallery-2.webp",
     gallery: [
       "/images/gallery/gallery-1.webp",
       "/images/gallery/gallery-2.webp",
@@ -71,5 +77,7 @@ export const SEO_CONFIG = {
     },
     tagManager: "",
 }
+
+export const CURRENCY = 'EUR'
 
 export const GOOGLE_MAP_EMBED = "pb=!1m18!1m12!1m3!1d2992.6397222438122!2d2.1743558!3d41.4036299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a2dcd83dfb93%3A0x9bd8aac21bc3c950!2sBas%C3%ADlica%20de%20la%20Sagrada%20Fam%C3%ADlia!5e0!3m2!1ses!2sve!4v1708609288993!5m2!1ses!2sve"

@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/layout/Stack.tsx", "src/app/[locale]/useIntersectionObserver.js", "src/app/[locale]/withLazyLoad.js", "src/app/[locale]/withLazyLoad.js"],
   "exclude": ["node_modules"]
 }

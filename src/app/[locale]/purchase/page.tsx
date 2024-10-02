@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import Button from '@/components/ui/Button';
 import { useTranslation } from 'next-i18next'
 import { APP_NAME, ATTRACTION_ID, PUBLIC_ASSETS, STRIPE_API, STRIPE_NAME, STRIPE_PUBLISHABLE_KEY, STRIPE_SUCCESS_URL } from '@/config/common.config';
-import { loadStripe, StripeElements} from '@stripe/stripe-js';
-import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@nextui-org/modal';
+import { loadStripe, StripeElements } from '@stripe/stripe-js';
 import Image from 'next/image';
 import Layout from '@/components/layout/Layout';
+import { Modal } from 'react-bootstrap';
 
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
@@ -59,8 +59,7 @@ export default function Purchase() {
   const [loading, setLoading] = useState(false);
   const [paymentElement, setPaymentElement] = useState<StripeElements | null>(null);
   const [paymentIdentifier, setPaymentIdentifier] = useState(null);
-  // const router = useRouter();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [paymentMessage, setPaymentMessage] = useState<string | null>(null);
 
   const text_badge = t("form.text_1");
@@ -105,10 +104,12 @@ export default function Purchase() {
 
     if (Object.keys(newErrors).length > 0) {
       return setErrors(newErrors);
+
     }
-    setChecked(true);
-      
-   
+    setErrors({});
+    setChecked(!checked);
+
+
   }
 
   useEffect(() => {
@@ -150,7 +151,7 @@ export default function Purchase() {
   const prepareCheckout = async () => {
     try {
       setLoading(true);
-      onOpen()
+      setShowModal(true)
       const currentLocale = i18n.language;
       const localData = localStorage.getItem(`${APP_NAME.replace(/ /g, '_')}_formValues`);
 
@@ -196,9 +197,9 @@ export default function Purchase() {
       if (!stripe) {
         throw new Error("Stripe.js has not been loaded correctly.");
       }
-      
+
       const elements = stripe.elements({ clientSecret });
-       const paymentElementInstance = elements.create('payment', {
+      const paymentElementInstance = elements.create('payment', {
         layout: {
           type: 'accordion',
           defaultCollapsed: false,
@@ -219,11 +220,11 @@ export default function Purchase() {
 
       setLoading(false);
 
-    } catch (error:unknown) {
+    } catch (error: unknown) {
       if (error instanceof Error) {
-      console.log("🚀 ~ prepareCheckout ~ error:", error.message)
-      setPaymentMessage(error.message);
-      setLoading(false);
+        console.log("🚀 ~ prepareCheckout ~ error:", error.message)
+        setPaymentMessage(error.message);
+        setLoading(false);
       }
     }
   };
@@ -238,29 +239,29 @@ export default function Purchase() {
     const formValues = JSON.parse(localData);
     const stripe = await stripePromise;
     if (stripe) {
-    if (paymentElement) {
-    const { error } = await stripe.confirmPayment({
-      elements: paymentElement,
-      confirmParams: {
-        return_url: `${STRIPE_SUCCESS_URL}?oid=${paymentIdentifier}&total=${formValues.total}&currency=EUR`,
-        payment_method_data: {
-          billing_details: {
-            name: `${STRIPE_NAME}: ${firstname} | ${lastname}`,
-            email,
+      if (paymentElement) {
+        const { error } = await stripe.confirmPayment({
+          elements: paymentElement,
+          confirmParams: {
+            return_url: `${STRIPE_SUCCESS_URL}?oid=${paymentIdentifier}&total=${formValues.total}&currency=EUR`,
+            payment_method_data: {
+              billing_details: {
+                name: `${STRIPE_NAME}: ${firstname} | ${lastname}`,
+                email,
+              },
+            },
           },
-        },
-      },
-    });
- 
-    if (error) {
-      if (error.type === "card_error" || error.type === "validation_error") {
-        setPaymentMessage(error.message || null)
-      } else {
-        setPaymentMessage("Error en el proceso de pago");
+        });
+
+        if (error) {
+          if (error.type === "card_error" || error.type === "validation_error") {
+            setPaymentMessage(error.message || null)
+          } else {
+            setPaymentMessage("Error en el proceso de pago");
+          }
+        }
       }
     }
-   }
-  }
 
     setLoading(false);
   };
@@ -268,7 +269,7 @@ export default function Purchase() {
 
 
   return (
-     <Layout>
+    <Layout>
       <section className="purse-area  overflow-hidden" id="ticket">
         <div className="container">
           <div className="row">
@@ -358,9 +359,9 @@ export default function Purchase() {
               </div>
               <div className={!checked ? "check__blk" : "check__blk active"} >
                 <input
-                  value={checked ? 'on' : 'off'}
                   type="checkbox"
                   id="checkbox"
+                  checked={checked} 
                   onChange={onChangeChecked}
                 />
                 <div className="d-block">
@@ -387,42 +388,44 @@ export default function Purchase() {
             disabled={!checked}
           />
         </div>
-
-        <Modal
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-        >
-          <ModalContent>
-              <>
-                <ModalBody>
-                  <ModalHeader></ModalHeader>
-                  {
-                    loading && <div className="spinner-grow spinner-grow-sm" id="payment-method-loader">
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
-                  }
-                  <div id="payment-element"></div>
-                </ModalBody>
-                <footer className='flex flex-column gap-2 px-6 py-4 justify-end'>
-                  {typeof paymentMessage === 'string' && paymentMessage.length > 0 && <h6 className='text-danger mx-auto'>{paymentMessage}</h6>}
-                  <Button
-                    type='submit'
-                    text={t("purchase.form.button_1")}
-                    banner={true}
-                    active
-                    onClick={handleSubmit}
-                    style={{
-                      width: "50%",
-                      alignSelf: "flex-end",
-                      padding: ".375rem .75rem"
-                    }}
-                  />
-                </footer>
-              </>
-          </ModalContent>
-        </Modal>
       </section>
-      </Layout>
+
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header>
+
+          {
+            loading && <div className="spinner-grow spinner-grow-sm" id="payment-method-loader">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          }
+          <div id="payment-element" className="w-100"></div>
+
+        </Modal.Header>
+        <Modal.Body>
+          <footer className='flex flex-column gap-2 px-6 py-4 justify-end'>
+            {typeof paymentMessage === 'string' && paymentMessage.length > 0 && <h6 className='text-danger mx-auto'>{paymentMessage}</h6>}
+            <Button
+              type='submit'
+              text={t("purchase.form.button_1")}
+              banner={true}
+              active
+              onClick={handleSubmit}
+              style={{
+                width: "50%",
+                alignSelf: "flex-end",
+                padding: ".375rem .75rem"
+              }}
+            />
+          </footer>
+        </Modal.Body>
+      </Modal>
+    </Layout>
 
   )
 }

@@ -1,5 +1,3 @@
-
-
 @keyframes slideIn {
   0% {
     opacity: 0;
@@ -12,9 +10,9 @@
 }
 :root {
   --bgColor: #2e2d2d;
-  --textColor: #303030;
-  --textColor: #444141;
-  --mainColor: #FF5F05;
+  --textColor: #D79010;
+  --mainColor: #D79010;
+;
   --f18: 18px;
   --f20: 20px;
   --f22: 22px;
@@ -164,6 +162,14 @@ li {
 }
 .margintop{
   margin-top: 40px;
+   display: flex;
+   justify-content: center;
+}
+@media (min-width: 768px){
+  .margintop{
+    display: flex;
+    justify-content: left;
+  }
 }
 
 .header-area {
@@ -272,6 +278,7 @@ li {
   overflow-y: scroll;
   animation: slideIn 0.3s ease-out;
 }
+
 .dropdown-content.show {
   display: block;
 }
@@ -405,13 +412,25 @@ li {
   color: #fff;
 }
 .hero-area {
-  background-image: url(/images/1.webp);
+  background-image: url(/images/mobile1.webp);
   background-size: cover;
   background-position: center;
   position: relative;
   color: #fff;
   padding: 193px 0 100px;
+  
 }
+@media (min-width:768px){
+  .hero-area {
+    background-image: url(/images/1.webp);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: #fff;
+    padding: 193px 0 100px;
+  }
+}
+
 .purse-area {
   background-image: url(/images/compra.webp);
   background-size: cover;
@@ -532,7 +551,7 @@ li {
   align-items: center;
   justify-content: space-around;
   padding: 8px 10px;
-  color: var(--textColor);
+  color: #424242;
 }
 .Ticket_quantity button {
   font-size: 24px;
@@ -582,7 +601,7 @@ li {
 .sec__title h1 {
   color: var(--textColor);
   margin-bottom: 20px;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 700;
 }
 .future__text a {
@@ -599,7 +618,7 @@ li {
   margin-bottom: 30px;
   letter-spacing: -0.8px;
   font-weight: 400;
-   font-size: 40px;
+   font-size: 30px;
 }
 .future__text h1 span {
   color: var(--textColor);
@@ -620,6 +639,9 @@ li {
   margin: 0;
   gap: 20px;
   font-weight: 400;
+  font-size: 35px;
+}
+.future__blk h2 span {
   font-size: 35px;
 }
 .hero__form__blk.sb_btn a {
@@ -671,13 +693,17 @@ li {
 .gallery-area .row {
   gap: 24px 0;
 }
-.gallery__btn a {
+.gallery__btn {
   width: max-content;
   margin: auto;
+   
 }
 .Explora-area {
   background: var(--bgColor);
   color: #fff;
+}
+.Explora-area h1{
+   text-align: center;
 }
 .Explora__content p {
   margin-bottom: 24px;
@@ -685,6 +711,7 @@ li {
 }
 .Explora__content h1 {
   margin-bottom: 30px;
+  font-size: 30px;
 }
 .Explora__content ul li {
   list-style: disc;
@@ -765,6 +792,7 @@ section.formas-area .sec__title h1 {
   font-weight: 400;
   color: #444141;
   margin-bottom: 30px;
+  font-size: 30px;
 }
 .gallery-h1 b,
 .nuestro__content h3 span {
@@ -835,6 +863,8 @@ footer.footer-area.f__home {
 }
 .footer__content h1 {
   margin-bottom: 40px;
+  font-size: 40px;
+  font-weight: 400;
 }
 .footer__content a {
   background: #fff;
@@ -983,7 +1013,7 @@ footer.footer-area.f__home {
   opacity: 0;
 }
 .check__blk input:checked:after {
-  opacity: 1;
+  opacity: 1; /* Imagen visible solo si está checked */
 }
 .check__blk a {
   display: block;
@@ -1071,6 +1101,7 @@ footer.footer-area.f__home {
   font-size: 14px !important;
   letter-spacing: -0.28px;
 }
+
 .single__table__column.cookie__name span {
   font-size: 18px;
   letter-spacing: -0.36px;
@@ -1231,7 +1262,7 @@ iframe {
   }
   .future__text p,
   .thm_btn {
-    font-size: 15px;
+    font-size: 16px;
   }
   .future__blk h2 {
     font-size: 24px;
@@ -1481,8 +1512,7 @@ iframe {
     min-width: 73px;
   }
   .arrow-down {
-    right: 33px;
-    top: 20px;
+    right: 3px;
   }
   .contact-area {
     padding-top: 40px;
@@ -1558,7 +1588,7 @@ iframe {
     font-size: 16px;
   }
   .nuestro__img span {
-    font-size: 27px;
+    font-size: 24px;
     font-style: italic;
     text-align: center;
     padding: 0 20px;
@@ -1617,12 +1647,7 @@ iframe {
     padding-bottom: 0;
   }
   .asombro-area p {
-    font-size: 20px;
-  }
-  .Explora-area {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    font-size: 16px;
   }
   .Explora-area .container {
     max-width: 500px;
@@ -1744,6 +1769,9 @@ iframe {
     text-align: center;
      cursor: pointer;
   }
+  #payment-element{
+    width: 100%;
+  }
   .future-area {
     margin-bottom: 20px;
   }
@@ -1860,7 +1888,6 @@ iframe {
   }
   .header__right {
     width: 15%;
-    margin-top: -20px;
   }
   .logo-area {
     max-width: 121px;
@@ -1990,19 +2017,48 @@ iframe {
   margin: 0 auto;
 }
 
+.asombro-area h2{
+  font-size: 30px;
+}
+.responsive-img{
+   height: 436px;
+   object-fit: cover;
+   margin-bottom: 30px;
+}
+.about_{
+  height: 350px;
+  object-fit: cover;
 
-.fondo{
-  background-image: url(/images/1.webp);
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  color: #fff;
-  
+}
+.imagen_horarios{
+  height: 577px;
+  object-fit: cover;
+}
+
+.about_im{
+  height: 388px;
+  width: 100%;
 }
 @media(min-width: 768px){
   .about_img{
       height: 600px;
   }
+  .sec__title h1 {
+   font-size: 40px;
+
+  }
+  .future__text h1 {
+     font-size: 40px;
+  }
+  .asombro-area h2{
+    font-size: 40px;
+  }
+  .Explora-area h1{
+    text-align: left;
+ }
+ .responsive-img{
+   height: 600px;
+ }
 }
 
 .alto{
@@ -2017,6 +2073,8 @@ iframe {
  margin-bottom: 1rem;
 }
 
-.asombro-area h2{
-  font-size: 40px;
+.modal_title_2{
+ margin-top: 20px;
+ font-weight: 700;
+ text-align: center;
 }

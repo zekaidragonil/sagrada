@@ -1,9 +1,9 @@
 'use client'
 
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { PUBLIC_ASSETS } from "@/config/common.config";
 import { LazyLoadImage } from "react-lazy-load-image-component"
-
 export default function Recomendacion() {
     const { t } = useTranslation('translation');
     const title = t("explore.title_1");
@@ -24,13 +24,12 @@ export default function Recomendacion() {
                 <div className="col-lg-6 d-flex justify-content-center align-items-center">
                   <div className="Explora__img" data-aos="zoom-in" >
                     <LazyLoadImage src={PUBLIC_ASSETS.explorerBanner} className="about_img" alt=""
-                      width={616} height={600}
                     />
                   </div>
                 </div>
                 <div className="col-lg-6" data-aos="fade-right" >
                   <div className="Explora__content">
-                    {title !== "explore.title_1" && <h2 className=" content_main_title_1" dangerouslySetInnerHTML={{ __html: title }} />}
+                    {title !== "explore.title_1" && <h1 className=" content_main_title_1" dangerouslySetInnerHTML={{ __html: title }} />}
                     {title2 !== "explore.title_2" && <p className="content_main_title_2" dangerouslySetInnerHTML={{ __html: title2 }} />}
                     <ul>
                       <li>
@@ -58,12 +57,13 @@ export default function Recomendacion() {
               </div>
             </div>
           </section>
-    
-          <section className="Explora-area overflow-hidden b fondo">
-            <div className="container opacity">
+          <section className="Explora-area overflow-hidden b">
+           <LazyLoadImage src={PUBLIC_ASSETS.imageRecomedacion} className="about_img" alt=""
+                      width={616} height={419}
+                    />
+            <div className="container">
               <div className="row">
-    
-                <div className="col-lg-6" data-aos="fade-right" >
+                <div className="col-lg-6"  >
                   <div className="Explora__content">
                   {title !== "explore.title_1" && <h1 className=" content_main_title_1" dangerouslySetInnerHTML={{ __html: title }} />}
                   <ul>

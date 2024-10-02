@@ -8,6 +8,8 @@ import i18nConfig from "@/config/i18n.config";
 import { APP_ICON, SEO_CONFIG } from "@/config/common.config";
 import TranslationsProvider from "@/components/TranslationsProvider";
 import Script from "next/script";
+import { GoogleTagManager } from '@next/third-parties/google';
+
 export const metadata: Metadata = {
   title: SEO_CONFIG.title,
   description: SEO_CONFIG.description,
@@ -34,6 +36,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}  dir={dir(locale)} suppressHydrationWarning>
+      <GoogleTagManager gtmId={SEO_CONFIG.tagManager} />
       <body >
         <TranslationsProvider
           namespaces={i18nNamespaces}
@@ -47,9 +50,6 @@ export default async function RootLayout({
       </body>
       {
         SEO_CONFIG.analytics.google !== "" && <Script src={`https://www.googletagmanager.com/gtm.js?id=${SEO_CONFIG.analytics.google}`} strategy="lazyOnload" />
-      }
-      {
-        SEO_CONFIG.tagManager !== "" && <Script src={`https://www.googletagmanager.com/gtag/js?id=${SEO_CONFIG.tagManager}`} strategy="lazyOnload" />
       }
     </html>
   );

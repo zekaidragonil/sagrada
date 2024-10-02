@@ -52,11 +52,11 @@ export default function Footer() {
 
                     <div className="col-lg-12">
                         <div className="footer__content" data-aos="zoom-in" >
-                            {title3 !== "footer.title_3" && <h2 className="section_heading_title_big footer_title_3" dangerouslySetInnerHTML={{ __html: title3 }} />}
+                            {title3 !== "footer.title_3" && <h1 className="section_heading_title_big footer_title_3" dangerouslySetInnerHTML={{ __html: title3 }} />}
                             <LazyLoadImage
                                 src={PUBLIC_ASSETS.ticket}
                                 className='center'
-                                width={180} height={28}
+                                width={130} height={40}
                             />
                             <a href="#" className="mt-3 thm_btn">{title4}</a>
                         </div>
@@ -69,16 +69,15 @@ export default function Footer() {
                     </div>
                     <div className="col-lg-12">
                         <div className="footer__btn">
-                    
-                            <ul>
-                            {copyright !== "footer.copyright" && <li> <b className="footer_copyright_li" dangerouslySetInnerHTML={{ __html: `${copyright} © TicketGo ` }} /></li>}
-                                {legal !== "footer.legal_1" && <li><b><Link href="/conditions" className="footer_link" dangerouslySetInnerHTML={{ __html: legal }} /></b></li>}
-                                {legal2 !== "footer.legal_2" && <li><b><span>|</span></b></li>}
-                                {legal3 !== "footer.legal_3" && <li><b><Link href="/cookies" className="footer_link" dangerouslySetInnerHTML={{ __html: legal2 }} /></b></li>}
-                                {legal4 !== "footer.legal_4" && <li><b><span>|</span></b></li>}
-                                {legal3 !== "footer.legal_3" && <li><b><Link href="/privacy" className="footer_link" dangerouslySetInnerHTML={{ __html: legal3 }} /></b></li>}
-                                {legal4 !== "footer.legal_4" && <li><b><span>|</span></b></li>}
-                                {legal3 !== "footer.legal_3" && <li><b><Link href="/legal" className="footer_link" dangerouslySetInnerHTML={{ __html: legal4 }} /></b></li>}
+                            {copyright !== "footer.copyright" && <p className="footer_copyright_li" dangerouslySetInnerHTML={{ __html: `${copyright} © TicketGo ` }} />}
+                              <ul>
+                                {legal !== "footer.legal_1" && <li><Link href="/conditions" className="footer_link" dangerouslySetInnerHTML={{ __html: legal }} /></li>}
+                                {legal2 !== "footer.legal_2" && <li><span>|</span></li>}
+                                {legal3 !== "footer.legal_3" && <li><Link href="/cookies" className="footer_link" dangerouslySetInnerHTML={{ __html: legal2 }} /></li>}
+                                {legal4 !== "footer.legal_4" && <li><span>|</span></li>}
+                                {legal3 !== "footer.legal_3" && <li><Link href="/privacy" className="footer_link" dangerouslySetInnerHTML={{ __html: legal3 }} /></li>}
+                                {legal4 !== "footer.legal_4" && <li><span>|</span></li>}
+                                {legal3 !== "footer.legal_3" && <li><Link href="/legal" className="footer_link" dangerouslySetInnerHTML={{ __html: legal4 }} /></li>}
                             </ul>
                         </div>
                     </div>
