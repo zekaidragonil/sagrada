@@ -12,8 +12,18 @@ children: ReactNode;
     
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     useEffect(() => {
-        Aos.init({ duration: 100 });
-    }, []);
+        Aos.init({ duration: 500 });
+        
+        const handleScroll = () => {
+          Aos.refresh(); 
+        };
+    
+        window.addEventListener('scroll', handleScroll);
+        
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
 
     return (
         <>
